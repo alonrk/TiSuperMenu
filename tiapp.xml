@@ -8,7 +8,7 @@
         <target device="blackberry">false</target>
     </deployment-targets>
     <sdk-version>3.3.0.GA</sdk-version>
-    <id>super.menu</id>
+    <id>alonrk.supermenu</id>
     <name>TiSuperMenu</name>
     <version>1.0</version>
     <publisher>tlukasavage</publisher>

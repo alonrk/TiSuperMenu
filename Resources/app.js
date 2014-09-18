@@ -1,9 +1,11 @@
+var superMenu = require('/supermenu');
+
 var win = Ti.UI.createWindow({
 	backgroundColor: '#fff',
 	fullscreen: false,
 	exitOnClose: true
 });
-var menu = require('/supermenu').createMenu({
+var menu = superMenu.createMenu({
 	buttonImage: 'images/add.png',
 	iconList: [
 		{ image: 'images/add-text.png', id: 'facebook' },
