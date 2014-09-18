@@ -3,14 +3,22 @@ var win = Ti.UI.createWindow({
 	fullscreen: false,
 	exitOnClose: true
 });
-var menu = require('/path').createMenu({
+var menu = require('/supermenu').createMenu({
+	buttonImage: 'images/add.png',
 	iconList: [
-		{ image: 'images/sm/facebook.png', id: 'facebook' },
-		{ image: 'images/sm/pridat.png', id: 'pridat' },
-		{ image: 'images/sm/twitter.png', id: 'twitter' },
-		{ image: 'images/sm/vimeo.png', id: 'vimeo' },
-		{ image: 'images/sm/youtube.png', id: 'youtube' }
-	]
+		{ image: 'images/add-text.png', id: 'facebook' },
+		{ image: 'images/add-photo.png', id: 'pridat' },
+		{ image: 'images/add-button.png', id: 'twitter' },
+		{ image: 'images/add-link.png', id: 'vimeo' },
+		{ image: 'images/add-video.png', id: 'youtube' }
+	],
+	iconSize: 80,
+	buttonSize: 80,
+	radius: 100,
+	arc: 180,
+	bottom: 0,
+	left: 120,
+	iconsBottom: 0
 });
 var label = Ti.UI.createLabel({
 	text: 'index: ???\nid: ???',

@@ -51,6 +51,8 @@ exports.createMenu = function(o) {
 	settings.radius = o.radius || (Ti.Platform.displayCaps.platformWidth/2 - settings.iconSize/2);
 	settings.bounceDistance = o.bounceDistance || DEFAULTS.BOUNCE_DISTANCE;
 	settings.stagger = o.stagger || DEFAULTS.STAGGER;
+	settings.arc = o.arc || 90;
+	settings.iconsBottom = o.iconsBottom || 0;
 	
 	// Create reusable fade & scale animations. Need to declare
 	// the transforms outside of the animation. See notes at the beginning
@@ -70,8 +72,8 @@ exports.createMenu = function(o) {
 	menu = Ti.UI.createView({
 		height: settings.buttonSize,
 		width: settings.buttonSize,
-		bottom: 0,
-		left: 0
+		bottom: o.bottom || 0,
+		left: o.left || 0
 	});
 	menuButton = createMenuButton();
 	menuIcons = [];
@@ -197,7 +199,7 @@ var handleMenuIconClick = function(e) {
 	// iterate through icons, fade and scale down the ones that weren't clicked,
 	// fade and scale up the one that was.
 	for (i = 0; i < menuIcons.length; i++) {
-		radians = (90 / (menuIcons.length - 1)) * i * Math.PI / 180;
+		radians = (settings.arc / (menuIcons.length - 1)) * i * Math.PI / 180;
 		icon = menuIcons[i];
 		
 		// android scales from the top left, not the center like ios,
@@ -263,11 +265,11 @@ var createMenuButton = function() {
 var createMenuIcon = function(index) {
 	var length = settings.iconList.length;
 	var id = settings.iconList[index].id;
-	var radians = (90 / (length - 1)) * index * Math.PI / 180;
+	var radians = (settings.arc / (length - 1)) * index * Math.PI / 180 - Math.PI / 2;
 	var bounceLeft = Math.sin(radians) * (settings.radius + settings.bounceDistance);
-	var bounceBottom = Math.cos(radians) * (settings.radius + settings.bounceDistance);
+	var bounceBottom = settings.iconsBottom + Math.cos(radians) * (settings.radius + settings.bounceDistance);
 	var finalLeft = Math.sin(radians) * settings.radius;
-	var finalBottom = Math.cos(radians) * settings.radius;
+	var finalBottom = settings.iconsBottom + Math.cos(radians) * settings.radius;
 	var animations = {
 		openBounce: Ti.UI.createAnimation({
 			duration: settings.menuDuration,
@@ -308,7 +310,7 @@ var createMenuIcon = function(index) {
 			height: settings.iconSize,
 			width: settings.iconSize,
 			left: 0,
-			bottom: 0,
+			bottom: settings.iconsBottom,
 			animations: animations,
 			index: index,
 			id: id
@@ -319,7 +321,7 @@ var createMenuIcon = function(index) {
 			height: settings.iconSize,
 			width: settings.iconSize,
 			left: 0,
-			bottom: 0,
+			bottom: settings.iconsBottom,
 			animations: animations,
 			index: index,
 			id: id
