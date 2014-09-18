@@ -8,8 +8,8 @@
         <target device="blackberry">false</target>
     </deployment-targets>
     <sdk-version>3.3.0.GA</sdk-version>
-    <id>path.menu</id>
-    <name>pathmenu</name>
+    <id>super.menu</id>
+    <name>TiSuperMenu</name>
     <version>1.0</version>
     <publisher>tlukasavage</publisher>
     <url>http://savagelook.com</url>

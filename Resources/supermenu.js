@@ -6,7 +6,7 @@ var DEFAULTS = {
 	ICON_IMAGE: '/images/star.png',
 	ICON_SIZE: Ti.Platform.displayCaps.platformWidth > 600 ? 80 : 40,
 	ICON_NUMBER: 6,
-	ICON_ROTATION: 720,
+	ICON_ROTATION: 360,
 	BUTTON_IMAGE: '/images/add.png',
 	BUTTON_SIZE: Ti.Platform.displayCaps.platformWidth > 600 ? 80 : 40,
 	MENU_DURATION: 500,
@@ -48,7 +48,8 @@ exports.createMenu = function(o) {
 	settings.buttonSize = o.buttonSize || DEFAULTS.BUTTON_SIZE;
 	settings.menuDuration = o.menuDuration || DEFAULTS.MENU_DURATION;
 	settings.fadeDuration = o.fadeDuration || DEFAULTS.FADE_DURATION;
-	settings.radius = o.radius || (Ti.Platform.displayCaps.platformWidth/2 - settings.iconSize/2);
+	settings.hRadius = o.hRadius || (Ti.Platform.displayCaps.platformWidth/2 - settings.iconSize/2);
+	settings.vRadius = o.vRadius || (Ti.Platform.displayCaps.platformWidth/2 - settings.iconSize/2);
 	settings.bounceDistance = o.bounceDistance || DEFAULTS.BOUNCE_DISTANCE;
 	settings.stagger = o.stagger || DEFAULTS.STAGGER;
 	settings.arc = o.arc || 90;
@@ -137,8 +138,8 @@ var handleMenuButtonClick = function(e) {
 	
 	// quick and dirty fix for making the containing view "fit"
 	if (anim === 'open') {
-		menu.height = settings.radius + settings.bounceDistance + settings.iconSize;
-		menu.width = settings.radius + settings.bounceDistance + settings.iconSize;
+		menu.height = settings.vRadius + settings.bounceDistance + settings.iconSize;
+		menu.width = settings.hRadius + settings.bounceDistance + settings.iconSize;
 	} else {
 		setTimeout(
 			function() {
@@ -206,14 +207,14 @@ var handleMenuIconClick = function(e) {
 		// hence the extra left/bottom animations
 		if (i !== e.source.index) {
 			if (isAndroid) {
-				fadeOut.left = Math.sin(radians) * settings.radius + (icon.width * 0.5);
-				fadeOut.bottom = Math.cos(radians) * settings.radius - (icon.height * 0.5);		
+				fadeOut.left = Math.sin(radians) * settings.hRadius + (icon.width * 0.5);
+				fadeOut.bottom = Math.cos(radians) * settings.vRadius - (icon.height * 0.5);		
 			}	
 			icon.animate(fadeOut);
 		} else {
 			if (isAndroid) {
-				fadeLarge.left = Math.sin(radians) * settings.radius - (icon.width * 1.5);
-				fadeLarge.bottom = Math.cos(radians) * settings.radius + (icon.height * 1.5);
+				fadeLarge.left = Math.sin(radians) * settings.hRadius - (icon.width * 1.5);
+				fadeLarge.bottom = Math.cos(radians) * settings.vRadius + (icon.height * 1.5);
 			}
 			icon.animate(fadeLarge);
 		}	
@@ -266,10 +267,10 @@ var createMenuIcon = function(index) {
 	var length = settings.iconList.length;
 	var id = settings.iconList[index].id;
 	var radians = (settings.arc / (length - 1)) * index * Math.PI / 180 - Math.PI / 2;
-	var bounceLeft = Math.sin(radians) * (settings.radius + settings.bounceDistance);
-	var bounceBottom = settings.iconsBottom + Math.cos(radians) * (settings.radius + settings.bounceDistance);
-	var finalLeft = Math.sin(radians) * settings.radius;
-	var finalBottom = settings.iconsBottom + Math.cos(radians) * settings.radius;
+	var bounceLeft = Math.sin(radians) * (settings.hRadius + settings.bounceDistance);
+	var bounceBottom = settings.iconsBottom + Math.cos(radians) * (settings.vRadius + settings.bounceDistance);
+	var finalLeft = Math.sin(radians) * settings.hRadius;
+	var finalBottom = settings.iconsBottom + Math.cos(radians) * settings.vRadius;
 	var animations = {
 		openBounce: Ti.UI.createAnimation({
 			duration: settings.menuDuration,

@@ -14,8 +14,10 @@ var menu = require('/supermenu').createMenu({
 	],
 	iconSize: 80,
 	buttonSize: 80,
-	radius: 100,
+	hRadius: 120,
+	vRadius: 100,
 	arc: 180,
+	iconRotation: 180,
 	bottom: 0,
 	left: 120,
 	iconsBottom: 0
